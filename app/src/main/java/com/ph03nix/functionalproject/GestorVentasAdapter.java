@@ -1,12 +1,16 @@
 package com.ph03nix.functionalproject;
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.ph03nix.functionalproject.Security.UniqueCode;
 
 import java.util.List;
 
@@ -36,8 +40,8 @@ public class GestorVentasAdapter extends RecyclerView.Adapter<GestorVentasAdapte
     public void onBindViewHolder(@NonNull GestorVentaViewHolder holder, int position) {
         GestorVentas gestor = gestores.get(position);
         holder.tvNombre.setText(gestor.getName());
-//        holder.tvIdentidad.setText("ID: " + gestor.getId());
         holder.tvCodigo.setText("Código: " + gestor.getUniqueCode());
+
 
         holder.itemView.setOnClickListener(v -> listener.onGestorClick(gestor));
     }
@@ -58,7 +62,6 @@ public class GestorVentasAdapter extends RecyclerView.Adapter<GestorVentasAdapte
         public GestorVentaViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombre);
-//            tvIdentidad = itemView.findViewById(R.id.tvIdentidad);
             tvCodigo = itemView.findViewById(R.id.tvCodigo);
         }
     }

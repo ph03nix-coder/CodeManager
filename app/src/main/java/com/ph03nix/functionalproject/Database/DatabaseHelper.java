@@ -12,6 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Tabla GestorVentas
     public static final String TABLE_GESTORES = "gestor_ventas";
     public static final String COLUMN_ID = "id";
+    public static final String COLUMN_CI = "ci";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_BASE64 = "unique_code_base64";
 
@@ -19,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_GESTORES =
             "CREATE TABLE " + TABLE_GESTORES + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_CI + " TEXT UNIQUE NOT NULL, " +
                     COLUMN_NAME + " TEXT NOT NULL, " +
                     COLUMN_BASE64 + " TEXT UNIQUE);";
 

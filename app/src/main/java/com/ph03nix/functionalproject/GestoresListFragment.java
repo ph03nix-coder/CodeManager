@@ -94,6 +94,7 @@ public class GestoresListFragment extends Fragment implements GestorVentasAdapte
         // Obtener referencias a los campos
         
         TextInputEditText etNombre = dialogView.findViewById(R.id.etNombre);
+        TextInputEditText etCI = dialogView.findViewById(R.id.etCI);
 
         // Crear el diálogo
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
@@ -111,22 +112,33 @@ public class GestoresListFragment extends Fragment implements GestorVentasAdapte
         Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         positiveButton.setOnClickListener(v -> {
             String nombre = etNombre.getText().toString().trim();
+            String ci = etCI.getText().toString().trim();
 
             if (nombre.isEmpty()) {
                 etNombre.setError("El nombre es requerido");
                 return;
             }
 
+            if (ci.isEmpty()) {
+                etCI.setError("El número de identidad es requerido");
+                return;
+            }
+
+            if (dataSource.ciExists(ci)) {
+                etCI.setError("El número de identidad ya existe");
+                return;
+            }
+
             // Si pasa las validaciones, agregar el gestor
-            addNewGestor(nombre);
+            addNewGestor(ci, nombre);
             dialog.dismiss();
         });
 
     }
 
-    private void addNewGestor(String nombre) {
+    private void addNewGestor(String ci, String nombre) {
         new Thread(() -> {
-            GestorVentas gestor = GestorVentas.createNew(dataSource.getNextID(), nombre);
+            GestorVentas gestor = GestorVentas.createNew(ci, nombre);
             dataSource.insertGestor(gestor);
 
             requireActivity().runOnUiThread(() -> {

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, new GestoresListFragment())
                     .commit();
         }
-
-        Log.e("DEBUG", "onCreate executed.");
     }
 
     @Override
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(getApplicationContext(), "Por implementar...", Toast.LENGTH_SHORT);
             return true;
         }
 

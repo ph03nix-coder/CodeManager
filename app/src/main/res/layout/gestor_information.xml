@@ -60,7 +60,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/giId"
+                    android:id="@+id/giCI"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
@@ -97,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

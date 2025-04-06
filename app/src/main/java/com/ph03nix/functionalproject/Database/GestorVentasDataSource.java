@@ -31,9 +31,18 @@ public class GestorVentasDataSource {
         ContentValues values = new ContentValues();
 //        values.put(DatabaseHelper.COLUMN_ID, gestor.getId());
         values.put(DatabaseHelper.COLUMN_NAME, gestor.getName());
+        values.put(DatabaseHelper.COLUMN_CI, gestor.getCi());
         values.put(DatabaseHelper.COLUMN_BASE64, gestor.getUniqueCode());
-
         return database.insert(DatabaseHelper.TABLE_GESTORES, null, values);
+    }
+
+    public boolean ciExists(String ci) {
+        for(GestorVentas gestor : getAllGestores()) {
+            if(gestor.getCi().equals(ci)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Obtener todos los GestorVentas
@@ -97,10 +106,11 @@ public class GestorVentasDataSource {
     // Convertir Cursor a GestorVentas
     private GestorVentas cursorToGestor(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID));
+        String ci = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CI));
         String name = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME));
         String base64 = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_BASE64));
 
-        return new GestorVentas(id, name, base64);
+        return new GestorVentas(id, ci, name, base64);
     }
 
     // Actualizar un GestorVentas

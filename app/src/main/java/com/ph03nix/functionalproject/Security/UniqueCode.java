@@ -15,9 +15,9 @@ public class UniqueCode {
         this.secureKeyManager = new SecureKeyManager();
     }
 
-    public String generateUniqueCode(Integer id) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID cannot be null");
+    public String generateUniqueCode(String ci) {
+        if (ci == null) {
+            throw new IllegalArgumentException("CI cannot be null");
         }
 
         try {
@@ -27,7 +27,7 @@ public class UniqueCode {
             Mac hmac = Mac.getInstance(HMAC_ALGORITHM);
             hmac.init(hmacKey);
 
-            byte[] hashBytes = hmac.doFinal(String.valueOf(id).getBytes(StandardCharsets.UTF_8));
+            byte[] hashBytes = hmac.doFinal(ci.getBytes(StandardCharsets.UTF_8));
             String codigoBase64 = Base64.encodeToString(hashBytes,
                     Base64.NO_WRAP | Base64.URL_SAFE | Base64.NO_PADDING);
             Log.d("DEBUG", "generateUniqueCode: " + codigoBase64.substring(0, 8));
@@ -39,8 +39,8 @@ public class UniqueCode {
         }
     }
 
-    public boolean verificarCodigo(String codigoIngresado, int idGestor) {
-        String codigoGenerado = generateUniqueCode(idGestor);
+    public boolean verificarCodigo(String codigoIngresado, String ciGestor) {
+        String codigoGenerado = generateUniqueCode(ciGestor);
         return constantTimeEquals(codigoGenerado, codigoIngresado);
     }
 

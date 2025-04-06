@@ -60,24 +60,30 @@ public class InformacionGestor extends AppCompatActivity {
         Button btnVerify = findViewById(R.id.btn_verify);
         btnVerify.setOnClickListener(v -> {
             String message = "";
-            if(new UniqueCode().verificarCodigo(gestor.getUniqueCode(), gestor.getId())) {
-                message = "Código verificado correctamente";
+            if(new UniqueCode().verificarCodigo(gestor.getUniqueCode(), gestor.getCi())) {
+                message = "El código es válido";
             } else {
                 message = "El código no es válido";
             }
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         });
 
-        TextView tvId = findViewById(R.id.giId);
+        TextView tvCI = findViewById(R.id.giCI);
         TextView tvName = findViewById(R.id.giName);
         TextView tvCode = findViewById(R.id.giUniqueCode);
 
-        tvId.setText(Integer.toString(id));
+        tvCI.setText(gestor.getCi());
         tvName.setText(gestor.getName());
         tvCode.setText(gestor.getUniqueCode());
 
         ImageView qrView = findViewById(R.id.iv_qr_code);
-        Bitmap qrCode = generateQRCode(gestor.getUniqueCode(), 500, 500);
+        StringBuilder sb = new StringBuilder();
+        sb.append("{" + '\n' +
+                "\tci: " + gestor.getCi() + "\n" +
+                "\tname: " + gestor.getName() + '\n' +
+                "\tcode: " + gestor.getUniqueCode() + '\n' +
+                "}");
+        Bitmap qrCode = generateQRCode(sb.toString(), 500, 500);
         if(qrCode != null) {
             qrView.setImageBitmap(qrCode);
         } else {
