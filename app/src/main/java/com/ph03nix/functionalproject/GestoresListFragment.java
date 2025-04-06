@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.ph03nix.functionalproject.Database.GestorVentasDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +81,7 @@ public class GestoresListFragment extends Fragment implements GestorVentasAdapte
         Intent intent = new Intent(getActivity(), InformacionGestor.class);
         intent.putExtra("identidad", gestor.getId());
         intent.putExtra("nombre", gestor.getName());
-        intent.putExtra("codigo", gestor.getUniqueCode().getBase64());
+        intent.putExtra("codigo", gestor.getUniqueCode());
         startActivityForResult(intent, 0);
     }
 
@@ -126,8 +126,7 @@ public class GestoresListFragment extends Fragment implements GestorVentasAdapte
 
     private void addNewGestor(String nombre) {
         new Thread(() -> {
-            GestorVentas gestor = new GestorVentas(-1, nombre, UniqueCode.createNew());
-            UniqueCode code = UniqueCode.createNew();
+            GestorVentas gestor = GestorVentas.createNew(dataSource.getNextID(), nombre);
             dataSource.insertGestor(gestor);
 
             requireActivity().runOnUiThread(() -> {

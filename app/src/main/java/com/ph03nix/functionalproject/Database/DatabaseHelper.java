@@ -1,4 +1,4 @@
-package com.ph03nix.functionalproject;
+package com.ph03nix.functionalproject.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,15 +14,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_BASE64 = "unique_code_base64";
-    public static final String COLUMN_PK_BYTES = "unique_code_pk_bytes"; // Guardamos la clave pública como BLOB
 
     // SQL para crear la tabla
     private static final String CREATE_TABLE_GESTORES =
             "CREATE TABLE " + TABLE_GESTORES + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_NAME + " TEXT NOT NULL, " +
-                    COLUMN_BASE64 + " TEXT UNIQUE, " +
-                    COLUMN_PK_BYTES + " BLOB);";
+                    COLUMN_BASE64 + " TEXT UNIQUE);";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

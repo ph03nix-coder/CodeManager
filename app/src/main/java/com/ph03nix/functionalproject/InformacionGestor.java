@@ -1,10 +1,8 @@
 package com.ph03nix.functionalproject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,8 +18,8 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-
-import java.util.List;
+import com.ph03nix.functionalproject.Database.GestorVentasDataSource;
+import com.ph03nix.functionalproject.Security.UniqueCode;
 
 public class InformacionGestor extends AppCompatActivity {
 
@@ -42,7 +40,7 @@ public class InformacionGestor extends AppCompatActivity {
 
         // Listener para el botón de navegación (flecha atrás)
         topAppBar.setNavigationOnClickListener(v -> {
-            finish(); // Cierra la actividad actual
+            finish();
         });
 
         dataSource = new GestorVentasDataSource(getApplicationContext());
@@ -59,18 +57,27 @@ public class InformacionGestor extends AppCompatActivity {
             finish();
         });
 
+        Button btnVerify = findViewById(R.id.btn_verify);
+        btnVerify.setOnClickListener(v -> {
+            String message = "";
+            if(new UniqueCode().verificarCodigo(gestor.getUniqueCode(), gestor.getId())) {
+                message = "Código verificado correctamente";
+            } else {
+                message = "El código no es válido";
+            }
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        });
+
         TextView tvId = findViewById(R.id.giId);
         TextView tvName = findViewById(R.id.giName);
         TextView tvCode = findViewById(R.id.giUniqueCode);
 
-        Log.e("DEBUG", "onPostCreate: id="+id);
-
         tvId.setText(Integer.toString(id));
         tvName.setText(gestor.getName());
-        tvCode.setText(gestor.getUniqueCode().getBase64());
+        tvCode.setText(gestor.getUniqueCode());
 
         ImageView qrView = findViewById(R.id.iv_qr_code);
-        Bitmap qrCode = generateQRCode(gestor.getUniqueCode().getBase64(), 500, 500);
+        Bitmap qrCode = generateQRCode(gestor.getUniqueCode(), 500, 500);
         if(qrCode != null) {
             qrView.setImageBitmap(qrCode);
         } else {
@@ -82,10 +89,10 @@ public class InformacionGestor extends AppCompatActivity {
         BitMatrix bitMatrix;
         try {
             bitMatrix = new MultiFormatWriter().encode(
-                    text,                // Texto a codificar (URL, texto, etc.)
+                    text,
                     BarcodeFormat.QR_CODE,
-                    width,              // Ancho del QR
-                    height              // Alto del QR
+                    width,
+                    height
             );
         } catch (WriterException e) {
             e.printStackTrace();

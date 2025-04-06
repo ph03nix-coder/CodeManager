@@ -37,7 +37,7 @@ public class GestorVentasAdapter extends RecyclerView.Adapter<GestorVentasAdapte
         GestorVentas gestor = gestores.get(position);
         holder.tvNombre.setText(gestor.getName());
 //        holder.tvIdentidad.setText("ID: " + gestor.getId());
-        holder.tvCodigo.setText("Código: " + gestor.getUniqueCode().getBase64().substring(0, 15) + "...");
+        holder.tvCodigo.setText("Código: " + gestor.getUniqueCode());
 
         holder.itemView.setOnClickListener(v -> listener.onGestorClick(gestor));
     }
