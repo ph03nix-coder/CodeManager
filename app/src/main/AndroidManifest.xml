@@ -19,6 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".InformacionGestor"
+            android:label="FunctionalProject"
+            android:theme="@style/Theme.FunctionalProject.NoActionBar">
+
+        </activity>
+
     </application>
 
 </manifest>

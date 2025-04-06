@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.security.interfaces.ECPublicKey;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,22 @@ public class GestorVentasDataSource {
         }
         cursor.close();
         return gestores;
+    }
+
+    public GestorVentas getGestorById(int id) {
+        Cursor cursor = database.query(
+                DatabaseHelper.TABLE_GESTORES,
+                null,
+                "id = " + id,
+                null,
+                null,
+                null,
+                null
+        );
+        cursor.moveToFirst();
+        GestorVentas gestor = cursorToGestor(cursor);
+        cursor.close();
+        return gestor;
     }
 
     // Convertir Cursor a GestorVentas

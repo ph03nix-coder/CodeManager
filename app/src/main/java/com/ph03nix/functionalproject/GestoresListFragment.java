@@ -33,7 +33,7 @@ public class GestoresListFragment extends Fragment implements GestorVentasAdapte
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataSource = new GestorVentasDataSource(requireContext());
+        dataSource = new GestorVentasDataSource(requireContext().getApplicationContext());
     }
 
     @Override
@@ -70,11 +70,19 @@ public class GestoresListFragment extends Fragment implements GestorVentasAdapte
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        loadGestores();
+    }
+
+    @Override
     public void onGestorClick(GestorVentas gestor) {
         // Mostrar detalles del gestor seleccionado
-//        Intent intent = new Intent(getActivity(), GestorDetailActivity.class);
-//        intent.putExtra("gestor_id", gestor.getId());
-//        startActivity(intent);
+        Intent intent = new Intent(getActivity(), InformacionGestor.class);
+        intent.putExtra("identidad", gestor.getId());
+        intent.putExtra("nombre", gestor.getName());
+        intent.putExtra("codigo", gestor.getUniqueCode().getBase64());
+        startActivityForResult(intent, 0);
     }
 
     private void showAddGestorDialog() {

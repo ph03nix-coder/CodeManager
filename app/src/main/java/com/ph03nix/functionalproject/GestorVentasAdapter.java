@@ -36,7 +36,7 @@ public class GestorVentasAdapter extends RecyclerView.Adapter<GestorVentasAdapte
     public void onBindViewHolder(@NonNull GestorVentaViewHolder holder, int position) {
         GestorVentas gestor = gestores.get(position);
         holder.tvNombre.setText(gestor.getName());
-        holder.tvIdentidad.setText("ID: " + gestor.getId());
+//        holder.tvIdentidad.setText("ID: " + gestor.getId());
         holder.tvCodigo.setText("Código: " + gestor.getUniqueCode().getBase64().substring(0, 15) + "...");
 
         holder.itemView.setOnClickListener(v -> listener.onGestorClick(gestor));
@@ -53,12 +53,12 @@ public class GestorVentasAdapter extends RecyclerView.Adapter<GestorVentasAdapte
     }
 
     static class GestorVentaViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNombre, tvIdentidad, tvDireccion, tvCodigo;
+        TextView tvNombre, tvCodigo;
 
         public GestorVentaViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombre);
-            tvIdentidad = itemView.findViewById(R.id.tvIdentidad);
+//            tvIdentidad = itemView.findViewById(R.id.tvIdentidad);
             tvCodigo = itemView.findViewById(R.id.tvCodigo);
         }
     }
