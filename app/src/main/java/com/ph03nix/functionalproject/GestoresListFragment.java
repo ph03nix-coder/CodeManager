@@ -84,14 +84,14 @@ public class GestoresListFragment extends Fragment implements GestorVentasAdapte
                 .inflate(R.layout.dialog_add_gestor, null);
 
         // Obtener referencias a los campos
-        TextInputEditText etIdentidad = dialogView.findViewById(R.id.etIdentidad);
+        
         TextInputEditText etNombre = dialogView.findViewById(R.id.etNombre);
 
         // Crear el diálogo
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Añadir nuevo gestor")
                 .setView(dialogView)
-                .setPositiveButton("Guardar", null) // Seteamos null para manejar el click después
+                .setPositiveButton("Guardar", null)
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
 
         AlertDialog dialog = builder.create();
@@ -102,7 +102,6 @@ public class GestoresListFragment extends Fragment implements GestorVentasAdapte
         // Manejar el botón positivo programáticamente para validar antes de cerrar
         Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         positiveButton.setOnClickListener(v -> {
-            int identidad = Integer.parseInt(etIdentidad.getText().toString().trim());
             String nombre = etNombre.getText().toString().trim();
 
             if (nombre.isEmpty()) {
@@ -111,15 +110,15 @@ public class GestoresListFragment extends Fragment implements GestorVentasAdapte
             }
 
             // Si pasa las validaciones, agregar el gestor
-            addNewGestor(identidad, nombre);
+            addNewGestor(nombre);
             dialog.dismiss();
         });
 
     }
 
-    private void addNewGestor(int identidad, String nombre) {
+    private void addNewGestor(String nombre) {
         new Thread(() -> {
-            GestorVentas gestor = new GestorVentas(identidad, nombre, UniqueCode.createNew());
+            GestorVentas gestor = new GestorVentas(-1, nombre, UniqueCode.createNew());
             UniqueCode code = UniqueCode.createNew();
             dataSource.insertGestor(gestor);
 

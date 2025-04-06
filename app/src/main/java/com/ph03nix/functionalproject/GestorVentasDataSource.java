@@ -36,7 +36,7 @@ public class GestorVentasDataSource {
     // Insertar un GestorVentas
     public long insertGestor(GestorVentas gestor) {
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_ID, gestor.getId());
+//        values.put(DatabaseHelper.COLUMN_ID, gestor.getId());
         values.put(DatabaseHelper.COLUMN_NAME, gestor.getName());
         values.put(DatabaseHelper.COLUMN_BASE64, gestor.getUniqueCode().getBase64());
         values.put(DatabaseHelper.COLUMN_PK_BYTES, gestor.getUniqueCode().getPublicKey().getEncoded()); // Guardamos ECPublicKey como bytes

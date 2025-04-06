@@ -19,9 +19,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // SQL para crear la tabla
     private static final String CREATE_TABLE_GESTORES =
             "CREATE TABLE " + TABLE_GESTORES + " (" +
-                    COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                    COLUMN_NAME + " TEXT, " +
-                    COLUMN_BASE64 + " TEXT, " +
+                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_NAME + " TEXT NOT NULL, " +
+                    COLUMN_BASE64 + " TEXT UNIQUE, " +
                     COLUMN_PK_BYTES + " BLOB);";
 
     public DatabaseHelper(Context context) {
